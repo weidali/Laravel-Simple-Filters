@@ -20,7 +20,9 @@ class CourseFiltersTest extends TestCase
         $categories[] = Category::inRandomOrder()->first()->id;
         $categories[] = Category::inRandomOrder()->first()->id;
         $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
 
+        $langs[] = Lang::inRandomOrder()->first()->id;
         $langs[] = Lang::inRandomOrder()->first()->id;
         $langs[] = Lang::inRandomOrder()->first()->id;
 
@@ -32,5 +34,29 @@ class CourseFiltersTest extends TestCase
             ->first();
 
         $this->assertInstanceOf(Course::class, $course);
+    }
+
+    /** @test */
+    public function test_filter_filters_by_lang_and_categories_through_courses()
+    {
+        $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
+
+        $langs[] = Lang::inRandomOrder()->first()->id;
+        $langs[] = Lang::inRandomOrder()->first()->id;
+        $langs[] = Lang::inRandomOrder()->first()->id;
+
+        $category = Category::withCount(['courses' => function ($query) use ($categories, $langs) {
+            $query->withFilters(
+                $categories,
+                $langs,
+            );
+        }])
+        ->first();
+
+        $this->assertInstanceOf(Category::class, $category);
     }
 }
