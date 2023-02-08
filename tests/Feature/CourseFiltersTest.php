@@ -19,7 +19,9 @@ class CourseFiltersTest extends TestCase
 
         $categories[] = Category::inRandomOrder()->first()->id;
         $categories[] = Category::inRandomOrder()->first()->id;
+        $categories[] = Category::inRandomOrder()->first()->id;
 
+        $langs[] = Lang::inRandomOrder()->first()->id;
         $langs[] = Lang::inRandomOrder()->first()->id;
 
         $course = Course::query()
